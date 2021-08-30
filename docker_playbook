@@ -1,0 +1,12 @@
+---
+- name: this playbook is to install docker
+  hosts: webserver
+  become: true
+  become_method: sudo
+  become_user: root
+
+  tasks:
+    - name: to install docker
+      apt:
+        name: docker.io
+        state: present
