@@ -1,0 +1,16 @@
+---
+- name: this playbook is to pull image from dockerhub
+  hosts: webserver
+  become: true
+  become_method: sudo
+  become_user: root
+
+  tasks:
+
+    - name: pull an image
+      shell:
+        cmd: docker pull tomcat
+
+    - name: start a container
+      shell:
+        cmd: docker run -itd --name con12 -p 8084:8080 tomcat:latest
