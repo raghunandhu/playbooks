@@ -1,0 +1,28 @@
+---
+- hosts: webserver
+  become: true
+  become_method: sudo
+  become_user: root
+
+  tasks:
+    - name: install java
+      apt:
+        name:  openjdk-8-jdk
+        state: present
+
+    - name: to download repository for jenkins
+      shell:
+        cmd: wget -q -O - https://pkg.jenkins.io/debian-stable/jenkins.io.key | sudo apt-key add -
+
+    - name: copying the downloaded key
+      shell:
+        cmd: sudo sh -c 'echo deb https://pkg.jenkins.io/debian-stable binary/ >   /etc/apt/sources.list.d/jenkins.list'
+
+    - name: update repo
+      shell:
+        cmd: apt update -y
+
+    - name: install jenkins
+      apt:
+        name: jenkins
+        state: present
